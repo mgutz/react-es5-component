@@ -9,19 +9,13 @@ class in the future so it's better to start using `React.Component` now.
 One nicety this library provides is `bindOnHandlers`. React.Component
 no longer autobinds handlers for you, so you must bind handlers to the
 instance. `bindOnHandlers` binds all functions in the prototype
-that match `/^on[A-Z]/` to the instance.
+that match `/^on[A-Z]/` to the instance and is done automatically for you.
 
-Instead of this
+You do not need to do this
 
 ```js
 this.onStoreChange = this.onStoreChange.bind(this)
 this.onHandleClick = this.onHandleClick.bind(this)
-```
-
-do this
-
-```js
-this.bindOnHandlers(this);
 ```
 
 This library depends on "React" being installed in your project.
@@ -36,13 +30,21 @@ var MyStore = require("../stores/MyStore");
 function MyComponent() {
     component.super(this, arguments);
     this.state = MyStore.getState();
-    this.bindOnHandlers(this);
 }
 // extends React.Component and adds #bindOnhandlers()
 component(MyComponent);
 
-MyComponent.prototype.componentDidMount() {
+MyComponent.prototype.componentDidMount = function() {
     MyStore.listen(this.onStoreChange);
+}
+
+MyComponent.prototype.onHandleClick = function(e) {
+    e.preventDefault();
+    // ...
+}
+
+MyComponent.prototype.onStoreChange = function(state) {
+    this.setState(state);
 }
 
 MyComponent.prototype.render = function() {
@@ -53,13 +55,7 @@ MyComponent.prototype.render = function() {
     );
 };
 
-MyComponent.prototype.onHandleClick = function(e) {
-    e.preventDefault();
-}
-
-MyComponent.prototype.onStoreChange = function(state) {
-    this.setState(state);
-}
+MyComponent.propTypes = {location: React.PropTypes.string};
 
 module.exports = MyComponent;
 ```
