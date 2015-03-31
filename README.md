@@ -41,8 +41,17 @@ function MyComponent() {
 // extends React.Component and adds #bindOnhandlers()
 component(MyComponent);
 
-MyComponent.prototype.componentDidMount() {
+MyComponent.prototype.componentDidMount = function() {
     MyStore.listen(this.onStoreChange);
+}
+
+MyComponent.prototype.onHandleClick = function(e) {
+    e.preventDefault();
+    // ...
+}
+
+MyComponent.prototype.onStoreChange = function(state) {
+    this.setState(state);
 }
 
 MyComponent.prototype.render = function() {
@@ -53,13 +62,7 @@ MyComponent.prototype.render = function() {
     );
 };
 
-MyComponent.prototype.onHandleClick = function(e) {
-    e.preventDefault();
-}
-
-MyComponent.prototype.onStoreChange = function(state) {
-    this.setState(state);
-}
+MyComponent.propTypes = {location: React.PropTypes.string};
 
 module.exports = MyComponent;
 ```
