@@ -8,5 +8,9 @@
   },
   "author": "Mario Gutierrez <mario@mgutz.com>",
   "homepage": "https://github.com/mgutz/react-es5-component",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mgutz/react-es5-component"
+  }
 }
