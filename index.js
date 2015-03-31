@@ -21,6 +21,11 @@ var __extends = function(child, parent) {
 // used to export any handler that is prefixed with "on"
 var reOnHandlers = /^on[A-Z]/;
 
+/**
+ * Setup the prototypical inheritance chain
+ *
+ * @param child {Object} The new component.
+ */
 function extendsReactComponent(child) {
     var c = __extends(child, React.Component);
 
@@ -35,9 +40,17 @@ function extendsReactComponent(child) {
     };
 }
 
-extendsReactComponent.super = function(child, args) {
+/**
+ * Calls the React.Component constructor ensuring this component is
+ * a React.Component.
+ *
+ * @param child {Object} The new component.
+ * @param args {Arguments} The arguments from child's constructor.
+ * @param autobind {Boolean} Whether to autobind.
+ */
+extendsReactComponent.super = function(child, args, autobind) {
     React.Component.prototype.constructor.apply(child, args);
-    child.bindOnHandlers(child);
+    if (autobind) child.bindOnHandlers(child);
 };
 
 module.exports = extendsReactComponent;
