@@ -1,6 +1,6 @@
 {
   "name": "react-es5-component",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Use `React.Component` in ES5.",
   "main": "index.js",
   "scripts": {
